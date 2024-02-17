@@ -11,6 +11,7 @@ WHERE ProductSubcategoryID IS NOT NULL;
 --3.
 SELECT ProductSubcategoryID, COUNT(*) AS CountedProducts
 FROM Production.Product
+WHERE ProductSubcategoryID IS NOT NULL
 GROUP BY ProductSubcategoryID;
 
 --4.
