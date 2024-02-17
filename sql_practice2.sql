@@ -82,8 +82,10 @@ WHERE DATEDIFF(year, o.OrderDate, GETDATE()) <= 26;
 --15
 SELECT TOP 5 ShipPostalCode, COUNT(*) AS TotalOrders
 FROM Orders
+WHERE ShipPostalCode IS NOT NULL
 GROUP BY ShipPostalCode
 ORDER BY TotalOrders DESC;
+
 
 --16
 SELECT TOP 5 ShipPostalCode, COUNT(*) AS TotalOrders
