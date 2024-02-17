@@ -91,8 +91,10 @@ ORDER BY TotalOrders DESC;
 SELECT TOP 5 ShipPostalCode, COUNT(*) AS TotalOrders
 FROM Orders
 WHERE DATEDIFF(year, OrderDate, GETDATE()) <= 26
+AND ShipPostalCode IS NOT NULL
 GROUP BY ShipPostalCode
 ORDER BY TotalOrders DESC;
+
 
 --17
 SELECT City, COUNT(*) AS NumberOfCustomers
