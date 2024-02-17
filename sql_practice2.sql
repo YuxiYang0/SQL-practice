@@ -14,6 +14,7 @@ FROM Production.Product
 WHERE ProductSubcategoryID IS NOT NULL
 GROUP BY ProductSubcategoryID;
 
+
 --4.
 SELECT COUNT(*) AS ProductsWithoutSubcategory
 FROM Production.Product
@@ -95,7 +96,6 @@ AND ShipPostalCode IS NOT NULL
 GROUP BY ShipPostalCode
 ORDER BY TotalOrders DESC;
 
-
 --17
 SELECT City, COUNT(*) AS NumberOfCustomers
 FROM Customers
@@ -111,14 +111,9 @@ HAVING COUNT(*) > 2;
 SELECT c.CompanyName, o.OrderDate
 FROM Customers c
 JOIN Orders o ON c.CustomerID = o.CustomerID
-
---20
-SELECT c.CompanyName, o.OrderDate
-FROM Customers c
-JOIN Orders o ON c.CustomerID = o.CustomerID
 WHERE o.OrderDate > '1998-01-01';
 
---21
+--20
 SELECT c.CompanyName, MAX(o.OrderDate) AS MostRecentOrderDate
 FROM Customers c
 JOIN Orders o ON c.CustomerID = o.CustomerID
@@ -141,15 +136,16 @@ HAVING COUNT(od.ProductID) > 100;
 
 --23
 SELECT s.CompanyName AS SupplierCompanyName, sh.CompanyName AS ShippingCompanyName
-FROM Suppliers s
-JOIN Shipper sh ON s.ShipVia = sh.ShipperID;
+FROM dbo.Suppliers s
+CROSS JOIN dbo.Shippers sh;
 
 --24
-SELECT o.OrderDate, p.ProductName
+SELECT CONVERT(date, o.OrderDate) AS OrderDate, p.ProductName
 FROM Orders o
 JOIN [Order Details] od ON o.OrderID = od.OrderID
 JOIN Products p ON od.ProductID = p.ProductID
 ORDER BY o.OrderDate;
+
 
 --25
 SELECT e1.FirstName + ' ' + e1.LastName AS Employee1, e2.FirstName + ' ' + e2.LastName AS Employee2
@@ -164,7 +160,7 @@ GROUP BY m.FirstName, m.LastName
 HAVING COUNT(e.EmployeeID) > 2;
 
 --27
-SELECT City, CompanyName, ContactName, 'Customer' AS Type
+SELECT City, CompanyName AS Name, ContactName, 'Customer' AS Type
 FROM Customers
 UNION ALL
 SELECT City, CompanyName, ContactName, 'Supplier' AS Type
